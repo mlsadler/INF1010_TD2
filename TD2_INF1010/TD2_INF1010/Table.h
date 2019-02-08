@@ -36,13 +36,14 @@ public:
 	double getChiffreAffaire() const;
 
 	///affichage
-	void afficher() const; //A MODIFIER
+	////////void afficher() const; //A MODIFIER
+	friend ostream& operator<<(ostream& o, const Table& table);
 
 private :
 	//A MODIFIER
 	/////////int capacite_;
 	vector <Plat*> commande_;
-	int nbPlats_;
+	///////////int nbPlats_;
 	int id_;
 	int nbPlaces_;
 	int nbClientsATable_;

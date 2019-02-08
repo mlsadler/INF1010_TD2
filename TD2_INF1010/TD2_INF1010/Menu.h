@@ -17,27 +17,31 @@ public:
 	// constructeurs
 	Menu();
 	Menu(string fichier, TypeMenu type);
+	Menu(const Menu& menu);
 
 	//destructeur
 	~Menu();
 
 	//getters
 	int getNbPlats() const;
-
+	vector<Plat*> getListePlats();
 	//affichage
-	void afficher() const; //A MODIFIER
+	//////////void afficher() const; //A MODIFIER
+	friend ostream& operator<<(ostream& o, const Menu& menu);
 
 	//methodes en plus
 	Plat* trouverPlat(const string& nom) const; // A MODIFIER
 	Plat * trouverPlatMoinsCher() const; // Utilise les vecteurs (NE PAS MODIFIER)
-	void ajouterPlat(const Plat & plat); // A MODIFIER
+	//////////////void ajouterPlat(const Plat & plat); // A MODIFIER
+	Menu& operator+=(const Plat& plat);
+	Menu& operator=(const Menu& menu);
 	bool lireMenu(const string& fichier);
 
 private :
 	// A MODIFIER
 	//////int capacite_;
 	vector <Plat*> listePlats_;
-	int nbPlats_;
+	/////int nbPlats_;
 	TypeMenu type_;
 
 };

@@ -43,6 +43,21 @@ void Plat::setPrix(double prix) {
 
 //methodes en plus
 
-void Plat::afficher() const {
-	cout << nom_ << " - " << prix_ << " $ (" << cout_ << "$ pour le restaurant)" << endl;
+bool Plat::operator<(const Plat& plat)
+{
+	if (prix_ < plat.prix_)
+		return true;
+	else
+		return false;
 }
+
+ostream& operator<<(ostream& o, const Plat& plat)
+{
+	return o << plat.nom_ << " - " << plat.prix_ << " $ (" << plat.cout_ << "$ pour le restaurant)" << endl;
+}
+
+/*
+void Plat::afficher() const {
+	cout << this;
+}
+*/

@@ -10,7 +10,7 @@
 Table::Table() {
 	///////////capacite_ = MAXCAP;
 	//////////commande_ = new Plat*[MAXCAP];
-	nbPlats_ = commande_.size();
+	///////////nbPlats_ = commande_.size(); 
 	id_ = -1;
 	nbPlaces_ = 1;
 	nbClientsATable_ = 0;
@@ -19,7 +19,7 @@ Table::Table() {
 Table::Table(int id, int nbPlaces) {
 	//////////////capacite_ = MAXCAP;
 	/////////////commande_ = new Plat*[capacite_];
-	nbPlats_ = commande_.size();
+	//////////////nbPlats_ = commande_.size();
 	id_ = id;
 	nbPlaces_ = nbPlaces;
 	nbClientsATable_ = 0;
@@ -28,11 +28,7 @@ Table::Table(int id, int nbPlaces) {
 //destructeur
 Table::~Table() {
 	//A MODIFIER
-	delete[] commande_; ////encore une fois pas sur de destruction dun vecteur
-	for (int i = 0; i < nbPlats_; i++) {
-		commande_.pop_back();
-		////??????
-	}
+	
 }
 
 //getters
@@ -68,12 +64,9 @@ void Table::libererTable() {
 	nbClientsATable_ = 0;
 	//A MODIFIER
 	
-	for (int i = 0; i < nbPlats_; i++) {
-		//commande_[i] = nullptr;
-		commande_.pop_back(); //je sais pas si ca va fuck up le for nbPlat (v.size()) pasque lui aussi va modifié quand on va pop bak
-	}
+	commande_.clear();
 	
-	nbPlats_ = 0;  ////utile??
+	/////////////nbPlats_ = 0;  ////utile??----> pu besoin comme variable
 	
 }
 
@@ -105,22 +98,43 @@ void Table::commander(Plat* plat) {
 
 double Table::getChiffreAffaire() const {
 	double chiffre = 0;
-	for (int i = 0; i < nbPlats_; i++) {
+	for (int i = 0; i < commande_.size(); i++) {
 		chiffre += (commande_[i]->getPrix() - commande_[i]->getCout());
 	}
 	return chiffre;
 }
 
 //affichage
+ostream& operator<<(ostream& o, const Table& table)
+{
+	o << "La table numero " << table.id_;
+	if (table.estOccupee()) {
+		o << " est occupee. ";
+		if (table.commande_.size() != 0) {
+			cout << "Voici la commande passee par les clients : " << endl;
+			for (int i = 0; i < table.commande_.size(); i++) {
+				o << "\t" << *table.commande_[i];
+			}
+		}
+		else
+			o << "Mais ils n'ont rien conmmande pour l'instant. " << endl;
+	}
+	else {
+		o << " est libre. " << endl;
+	}
+	return o;
+
+}
+
+/*
 void Table::afficher() const {
 	cout << "La table numero " << id_;
 	if (estOccupee()) {
 		cout << " est occupee. ";
-		if (nbPlats_ != 0) {
+		if (commande_.size() != 0) {
 			cout << "Voici la commande passee par les clients : " << endl;
-			for (int i = 0; i < nbPlats_; i++) {
-				cout << "\t";
-				commande_[i]->afficher();
+			for (int i = 0; i < commande_.size(); i++) {
+				cout << "\t" << commande_[i];
 			}
 		}
 		else
@@ -130,3 +144,4 @@ void Table::afficher() const {
 		cout << " est libre. " << endl;
 	}
 }
+*/

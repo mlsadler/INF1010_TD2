@@ -12,24 +12,34 @@ Menu::Menu() {
 	/////////capacite_ = MAXPLAT;
 	/////////listePlats_ = new Plat*[capacite_];
 
-	nbPlats_ = listePlats_.size(); ///
+	//////////nbPlats_ = listePlats_.size(); ///
 	type_ = Matin;
 }
 
 Menu::Menu(string fichier, TypeMenu type) {
 	//////////capacite_ = MAXPLAT;
 	//////////listePlats_ = new Plat*[capacite_];
-	nbPlats_ = listePlats_.size(); ////
+	/////////nbPlats_ = listePlats_.size(); ////
 	type_ = type;
 
 	//lecture du fichier -- creation du menu
 	lireMenu(fichier);
 }
 
+Menu::Menu(const Menu& menu) {
+	
+	for (int i = 0; i < menu.listePlats_.size(); i++) {
+		Plat* platPtr = new Plat(*menu.listePlats_[i]);
+		listePlats_.push_back(platPtr);
+	}
+		
+	type_ = menu.type_;
+	
+}
 //destructeur
 Menu::~Menu() {
 	// A MODIFIER
-	for (int i = 0; i < nbPlats_; i++)
+	for (int i = 0; i < listePlats_.size(); i++)
 		delete listePlats_[i];
 	/////////delete[] listePlats_; /////pas sur si faut delete vector
 }
@@ -37,24 +47,36 @@ Menu::~Menu() {
 //getters
 
 int Menu::getNbPlats() const {
-	return nbPlats_;
+	return listePlats_.size();
+}
+
+vector<Plat*> Menu::getListePlats(){
+	return listePlats_;
 }
 
 //autres methodes
+ostream& operator<<(ostream& o, const Menu& menu)
+{
+	for (int i = 0; i < menu.listePlats_.size(); i++) {
+		o << "\t" << *menu.listePlats_[i];
+	}
+	return o;
+}
 
+/*
 void Menu::afficher() const {
 
-	for (int i = 0; i < nbPlats_; i++) {
-		cout << "\t";
-		listePlats_[i]->afficher();
+	for (int i = 0; i < listePlats_.size(); i++) {
+		cout << "\t" << listePlats_[i];
 
 	}
 }
 
+
 void Menu::ajouterPlat(const Plat &  plat) {
 	// A MODIFIER
 
-	/*
+	
 	if (nbPlats_ == capacite_) {
 		if (capacite_ == 0) {
 			capacite_ = 1;
@@ -76,11 +98,30 @@ void Menu::ajouterPlat(const Plat &  plat) {
 	}
 	
 	listePlats_[nbPlats_] = new Plat(plat);
-	*/
-	listePlats_.push_back(plat);
+	
+	///////////////listePlats_.push_back(plat);
 	////nbPlats_++;
 }
+*/
 
+Menu& Menu::operator+=(const Plat& plat) {
+	Plat* platPtr = new Plat(plat);
+	listePlats_.push_back(platPtr);
+	return *this;
+}
+
+Menu& Menu::operator=(const Menu& menu) {
+
+	if (this != &menu) {
+		listePlats_.clear();
+		for (int i = 0; i < menu.listePlats_.size(); i++)
+			listePlats_.push_back(menu.listePlats_[i]);
+		
+		type_ = menu.type_;
+	}
+
+	return *this;
+}
 
 bool Menu::lireMenu(const string& fichier) {
 	ifstream file(fichier, ios::in);
@@ -151,7 +192,8 @@ bool Menu::lireMenu(const string& fichier) {
 
 					cout =int( stof(coutString.c_str()));
 
-					ajouterPlat( Plat(nom, prix, cout));
+					
+					*this+= Plat(nom, prix, cout);
 					nom = "";
 					prixString = "";
 					coutString = "";
@@ -185,7 +227,7 @@ Plat * Menu::trouverPlatMoinsCher() const
 }
 
 Plat* Menu::trouverPlat(const string& nom) const {
-	for (int i = 0; i < nbPlats_; i++) {
+	for (int i = 0; i < listePlats_.size(); i++) {
 		if (listePlats_[i]->getNom() == nom)
 			return listePlats_[i];
 	}
