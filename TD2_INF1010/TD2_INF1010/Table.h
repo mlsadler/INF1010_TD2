@@ -8,6 +8,7 @@
 #define TABLE_H
 
 #include "Plat.h"
+
 const  int MAXCAP = 5;
 class Table {
 public:
@@ -39,8 +40,8 @@ public:
 
 private :
 	//A MODIFIER
-	int capacite_;
-	Plat** commande_;
+	/////////int capacite_;
+	vector <Plat*> commande_;
 	int nbPlats_;
 	int id_;
 	int nbPlaces_;

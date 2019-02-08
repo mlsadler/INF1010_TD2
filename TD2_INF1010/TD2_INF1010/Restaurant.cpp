@@ -18,9 +18,9 @@ Restaurant::Restaurant() {
 	menuMidi_ = new Menu("menu.txt", Midi);
 	menuSoir_ = new Menu("menu.txt",  Soir);
 
-	capaciteTables_ = INTTABLES;
-	nbTables_ = 0;
-	tables_ = new Table*[capaciteTables_];
+	////capaciteTables_ = INTTABLES;
+	nbTables_ = tables_.size();
+	//////tables_ = new Table*[capaciteTables_];
 
 
 }
@@ -37,9 +37,9 @@ Restaurant::Restaurant(const string& fichier,  const string& nom, TypeMenu momen
 	menuSoir_ = new Menu(fichier,  Soir);
 
 
-	capaciteTables_ = INTTABLES;
-	nbTables_ = 0;
-	tables_ = new Table*[capaciteTables_];
+	///////capaciteTables_ = INTTABLES;
+	nbTables_ = tables_.size();
+	////////tables_ = new Table*[capaciteTables_];
 
 	lireTable(fichier);
 }
@@ -52,8 +52,9 @@ Restaurant::~Restaurant() {
 
 	//A MODIFIER
 	for (int i = 0; i < nbTables_; i++)
-		delete tables_[i];
-	delete[] tables_;
+		tables_.pop_back();
+		///delete tables_[i];
+	delete[] tables_;////??????????
 }
 
 
@@ -174,6 +175,7 @@ void Restaurant::lireTable(const string& fichier) {
 
 void Restaurant::ajouterTable(int id, int nbPlaces) {
 	// A MODIFIER
+	/*
 	if (nbTables_ == capaciteTables_) {
 		capaciteTables_ *= 2;
 		Table** temp = new Table*[capaciteTables_];
@@ -189,6 +191,8 @@ void Restaurant::ajouterTable(int id, int nbPlaces) {
 
 	tables_[nbTables_] = new Table(id, nbPlaces);
 	nbTables_++;
+	*/
+	tables_.push_back(id,nbPlaces)/////pas sur qu on peut en mettre 2
 }
 
 void Restaurant::placerClients(int nbClients) {

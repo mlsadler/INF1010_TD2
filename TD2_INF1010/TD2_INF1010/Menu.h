@@ -35,8 +35,8 @@ public:
 
 private :
 	// A MODIFIER
-	int capacite_;
-	Plat** listePlats_;
+	//////int capacite_;
+	vector <Plat*> listePlats_;
 	int nbPlats_;
 	TypeMenu type_;
 

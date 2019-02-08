@@ -8,18 +8,18 @@
 
 //constructeurs
 Table::Table() {
-	capacite_ = MAXCAP;
-	commande_ = new Plat*[MAXCAP];
-	nbPlats_ = 0;
+	///////////capacite_ = MAXCAP;
+	//////////commande_ = new Plat*[MAXCAP];
+	nbPlats_ = commande_.size();
 	id_ = -1;
 	nbPlaces_ = 1;
 	nbClientsATable_ = 0;
 }
 
 Table::Table(int id, int nbPlaces) {
-	capacite_ = MAXCAP;
-	commande_ = new Plat*[capacite_];
-	nbPlats_ = 0;
+	//////////////capacite_ = MAXCAP;
+	/////////////commande_ = new Plat*[capacite_];
+	nbPlats_ = commande_.size();
 	id_ = id;
 	nbPlaces_ = nbPlaces;
 	nbClientsATable_ = 0;
@@ -28,7 +28,11 @@ Table::Table(int id, int nbPlaces) {
 //destructeur
 Table::~Table() {
 	//A MODIFIER
-	delete[] commande_;
+	delete[] commande_; ////encore une fois pas sur de destruction dun vecteur
+	for (int i = 0; i < nbPlats_; i++) {
+		commande_.pop_back();
+		////??????
+	}
 }
 
 //getters
@@ -63,10 +67,14 @@ void Table::libererTable() {
 	nbPlaces_ += nbClientsATable_;
 	nbClientsATable_ = 0;
 	//A MODIFIER
+	
 	for (int i = 0; i < nbPlats_; i++) {
-		commande_[i] = nullptr;
+		//commande_[i] = nullptr;
+		commande_.pop_back(); //je sais pas si ca va fuck up le for nbPlat (v.size()) pasque lui aussi va modifié quand on va pop bak
 	}
-	nbPlats_ = 0;
+	
+	nbPlats_ = 0;  ////utile??
+	
 }
 
 void Table::placerClient(int nbClients) {
@@ -77,6 +85,7 @@ void Table::placerClient(int nbClients) {
 //autres methodes
 void Table::commander(Plat* plat) {
 	// A MODIFIER
+	/*
 	if (nbPlats_ == capacite_) {
 		capacite_ *= 2;
 		Plat** temp = new Plat*[capacite_];
@@ -90,6 +99,8 @@ void Table::commander(Plat* plat) {
 
 	commande_[nbPlats_] = plat;
 	nbPlats_++;
+	*/
+	commande_.push_back(plat);
 }
 
 double Table::getChiffreAffaire() const {

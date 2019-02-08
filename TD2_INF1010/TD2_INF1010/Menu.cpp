@@ -9,16 +9,17 @@
 //constructeurs
 
 Menu::Menu() {
-	capacite_ = MAXPLAT;
-	listePlats_ = new Plat*[capacite_];
-	nbPlats_ = 0;
+	/////////capacite_ = MAXPLAT;
+	/////////listePlats_ = new Plat*[capacite_];
+
+	nbPlats_ = listePlats_.size(); ///
 	type_ = Matin;
 }
 
 Menu::Menu(string fichier, TypeMenu type) {
-	capacite_ = MAXPLAT;
-	listePlats_ = new Plat*[capacite_];
-	nbPlats_ = 0;
+	//////////capacite_ = MAXPLAT;
+	//////////listePlats_ = new Plat*[capacite_];
+	nbPlats_ = listePlats_.size(); ////
 	type_ = type;
 
 	//lecture du fichier -- creation du menu
@@ -30,7 +31,7 @@ Menu::~Menu() {
 	// A MODIFIER
 	for (int i = 0; i < nbPlats_; i++)
 		delete listePlats_[i];
-	delete[] listePlats_;
+	/////////delete[] listePlats_; /////pas sur si faut delete vector
 }
 
 //getters
@@ -52,6 +53,8 @@ void Menu::afficher() const {
 
 void Menu::ajouterPlat(const Plat &  plat) {
 	// A MODIFIER
+
+	/*
 	if (nbPlats_ == capacite_) {
 		if (capacite_ == 0) {
 			capacite_ = 1;
@@ -71,9 +74,11 @@ void Menu::ajouterPlat(const Plat &  plat) {
 
 		}
 	}
-
+	
 	listePlats_[nbPlats_] = new Plat(plat);
-	nbPlats_++;
+	*/
+	listePlats_.push_back(plat);
+	////nbPlats_++;
 }
 
 

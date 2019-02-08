@@ -49,8 +49,8 @@ private:
 	// A MODIFIER
 
 	//liste des tables
-	int capaciteTables_;
-	Table** tables_;
+	//////int capaciteTables_;
+	vector <Table*> tables_;
 	int nbTables_;
 };
 #endif // !RESTAURANT_H
