@@ -68,8 +68,8 @@ Restaurant::~Restaurant() {
 	delete menuSoir_;
 
 	//A MODIFIER
-	for (int i = 0; i < tables_.size(); i++)
-		delete tables_[i];
+	//for (int i = 0; i < tables_.size(); i++)
+		//delete tables_[i];
 		///delete tables_[i];
 	////delete[] tables_;////??????????
 }
