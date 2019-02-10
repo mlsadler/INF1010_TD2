@@ -7,96 +7,139 @@
 #include "Table.h"
 
 //constructeurs
+
+/****************************************************************************
+  * Description: Constructeur par default
+  * in:
+  * out:
+  * in \ out:
+  ****************************************************************************/
 Table::Table() {
-	///////////capacite_ = MAXCAP;
-	//////////commande_ = new Plat*[MAXCAP];
-	///////////nbPlats_ = commande_.size(); 
 	id_ = -1;
 	nbPlaces_ = 1;
 	nbClientsATable_ = 0;
 }
 
+/****************************************************************************
+ * Description: Constructeur avec parametre
+ * in: id et nbPlaces
+ * out:
+ * in \ out:
+ ****************************************************************************/
 Table::Table(int id, int nbPlaces) {
-	//////////////capacite_ = MAXCAP;
-	/////////////commande_ = new Plat*[capacite_];
-	//////////////nbPlats_ = commande_.size();
 	id_ = id;
 	nbPlaces_ = nbPlaces;
 	nbClientsATable_ = 0;
 }
 
-//destructeur
-Table::~Table() {
-	//A MODIFIER
-
-	
-}
-
 //getters
+
+/****************************************************************************
+ * Description: Fonction qui retourne le id de la table
+ * in:
+ * out:
+ * in \ out:
+ ****************************************************************************/
 int Table::getId() const {
 	return id_;
 }
 
+/****************************************************************************
+ * Description: Fonction qui retourne le nombre de place que la table offre
+ * in:
+ * out:
+ * in \ out:
+ ****************************************************************************/
 int Table::getNbPlaces() const {
 	return nbPlaces_;
 }
 
+/****************************************************************************
+ * Description: Fonction qui retourne le nombre de clients à la table
+ * in:
+ * out:
+ * in \ out:
+ ****************************************************************************/
 int Table::getnbClientATable() const
 {
 	return nbClientsATable_;
 }
 
+/****************************************************************************
+ * Description: Fonction qui retourne si la table est pleine ou non avec le nombre de places restant soit 0
+ * in:
+ * out:
+ * in \ out:
+ ****************************************************************************/
 bool Table::estPleine() const {
 	return nbPlaces_==0;
 }
 
+/****************************************************************************
+ * Description: Fonction qui retourne si la table est occupee ou non
+ * in:
+ * out:
+ * in \ out:
+ ****************************************************************************/
 bool Table::estOccupee() const
 {
 	return nbClientsATable_!=0;
 }
 
 //setters
+
+/****************************************************************************
+ * Description: Fonction qui met le id a une valeur voulu
+ * in: id
+ * out:
+ * in \ out:
+ ****************************************************************************/
 void Table::setId(int id) {
 	id_ = id;
 }
 
+/****************************************************************************
+ * Description: Fonction qui effacera les commandes de la table et la rendera valide pour de nouveau client
+ * in:
+ * out:
+ * in \ out:
+ ****************************************************************************/
 void Table::libererTable() {
 	nbPlaces_ += nbClientsATable_;
 	nbClientsATable_ = 0;
-	//A MODIFIER
-	
 	commande_.clear();
-	
-	/////////////nbPlats_ = 0;  ////utile??----> pu besoin comme variable
 	
 }
 
+/****************************************************************************
+ * Description: Fonction qui rend la table occcupee
+ * in: nbClients
+ * out:
+ * in \ out:
+ ****************************************************************************/
 void Table::placerClient(int nbClients) {
 	nbClientsATable_ = nbClients;
 	nbPlaces_ -= nbClients;
 }
 
 //autres methodes
+
+/****************************************************************************
+ * Description: Fonction qui recoit un plat et qui la place dans une liste de plat commander pour une table
+ * in: Plat
+ * out:
+ * in \ out:
+ ****************************************************************************/
 void Table::commander(Plat* plat) {
-	// A MODIFIER
-	/*
-	if (nbPlats_ == capacite_) {
-		capacite_ *= 2;
-		Plat** temp = new Plat*[capacite_];
-		for (int i = 0; i < nbPlats_; i++) {
-			temp[i] = commande_[i];
-		}
-
-		delete[] commande_;
-		commande_ = temp;
-	}
-
-	commande_[nbPlats_] = plat;
-	nbPlats_++;
-	*/
 	commande_.push_back(plat);
 }
 
+/****************************************************************************
+ * Description: Fonction qui calcul le chiffre d'affaire
+ * in:
+ * out:
+ * in \ out:
+ ****************************************************************************/
 double Table::getChiffreAffaire() const {
 	double chiffre = 0;
 	for (int i = 0; i < commande_.size(); i++) {
@@ -106,6 +149,13 @@ double Table::getChiffreAffaire() const {
 }
 
 //affichage
+
+/****************************************************************************
+ * Description: Fonction qui assigne a l'operateur << a une fonction d'affichage d'une table
+ * in: table
+ * out:
+ * in \ out: o
+ ****************************************************************************/
 ostream& operator<<(ostream& o, const Table& table)
 {
 	o << "La table numero " << table.id_;
@@ -126,23 +176,3 @@ ostream& operator<<(ostream& o, const Table& table)
 	return o;
 
 }
-
-/*
-void Table::afficher() const {
-	cout << "La table numero " << id_;
-	if (estOccupee()) {
-		cout << " est occupee. ";
-		if (commande_.size() != 0) {
-			cout << "Voici la commande passee par les clients : " << endl;
-			for (int i = 0; i < commande_.size(); i++) {
-				cout << "\t" << commande_[i];
-			}
-		}
-		else
-			cout << "Mais ils n'ont rien conmmande pour l'instant. " << endl;
-	}
-	else {
-		cout << " est libre. " << endl;
-	}
-}
-*/

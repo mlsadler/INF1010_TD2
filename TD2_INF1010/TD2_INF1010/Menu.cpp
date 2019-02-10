@@ -8,24 +8,36 @@
 
 //constructeurs
 
-Menu::Menu() {
-	/////////capacite_ = MAXPLAT;
-	/////////listePlats_ = new Plat*[capacite_];
+/****************************************************************************
+  * Description: Constructeur par default
+  * in:
+  * out:
+  * in \ out:
+  ****************************************************************************/
 
-	//////////nbPlats_ = listePlats_.size(); ///
+Menu::Menu() {
 	type_ = Matin;
 }
 
+/****************************************************************************
+  * Description: Constructeur avec parametre
+  * in: fichier et type
+  * out:
+  * in \ out:
+  ****************************************************************************/
 Menu::Menu(string fichier, TypeMenu type) {
-	//////////capacite_ = MAXPLAT;
-	//////////listePlats_ = new Plat*[capacite_];
-	/////////nbPlats_ = listePlats_.size(); ////
 	type_ = type;
 
 	//lecture du fichier -- creation du menu
 	lireMenu(fichier);
 }
 
+/****************************************************************************
+  * Description: Constructeur de copie
+  * in: menu
+  * out:
+  * in \ out:
+  ****************************************************************************/
 Menu::Menu(const Menu& menu) {
 	
 	for (int i = 0; i < menu.listePlats_.size(); i++) {
@@ -37,24 +49,49 @@ Menu::Menu(const Menu& menu) {
 	
 }
 //destructeur
+
+/****************************************************************************
+  * Description: Destructeur de menu
+  * in:
+  * out:
+  * in \ out:
+  ****************************************************************************/
 Menu::~Menu() {
 	// A MODIFIER
 	for (int i = 0; i < listePlats_.size(); i++)
 		delete listePlats_[i];
-	/////////delete[] listePlats_; /////pas sur si faut delete vector
 }
 
 //getters
 
+/****************************************************************************
+  * Description: Retourne le nombre de plats dans la liste
+  * in:
+  * out:
+  * in \ out:
+  ****************************************************************************/
 int Menu::getNbPlats() const {
 	return listePlats_.size();
 }
 
+/****************************************************************************
+  * Description: Retourne la listePlats_
+  * in:
+  * out:
+  * in \ out:
+  ****************************************************************************/
 vector<Plat*> Menu::getListePlats(){
 	return listePlats_;
 }
 
 //autres methodes
+
+/****************************************************************************
+ * Description: Fonction qui assigne a l'operateur << a une fonction d'affichage d'un menu
+ * in: menu
+ * out:
+ * in \ out: o
+ ****************************************************************************/
 ostream& operator<<(ostream& o, const Menu& menu)
 {
 	for (int i = 0; i < menu.listePlats_.size(); i++) {
@@ -63,53 +100,24 @@ ostream& operator<<(ostream& o, const Menu& menu)
 	return o;
 }
 
-/*
-void Menu::afficher() const {
-
-	for (int i = 0; i < listePlats_.size(); i++) {
-		cout << "\t" << listePlats_[i];
-
-	}
-}
-
-
-void Menu::ajouterPlat(const Plat &  plat) {
-	// A MODIFIER
-
-	
-	if (nbPlats_ == capacite_) {
-		if (capacite_ == 0) {
-			capacite_ = 1;
-			delete[] listePlats_;
-			listePlats_ = new Plat*[1];
-
-		}
-		else {
-			capacite_ *= 2;
-			Plat** listeTemp = new Plat*[capacite_];
-			for (int i = 0; i < nbPlats_; i++) {
-				listeTemp[i] = listePlats_[i];
-			}
-
-			delete[] listePlats_;
-			listePlats_ = listeTemp;
-
-		}
-	}
-	
-	listePlats_[nbPlats_] = new Plat(plat);
-	
-	///////////////listePlats_.push_back(plat);
-	////nbPlats_++;
-}
-*/
-
+/****************************************************************************
+ * Description: Fonction qui assigne a l'operateur += a une fonction pour ajouter un plat a un menu
+ * in: plat
+ * out:
+ * in \ out:
+ ****************************************************************************/
 Menu& Menu::operator+=(const Plat& plat) {
 	Plat* platPtr = new Plat(plat);
 	listePlats_.push_back(platPtr);
 	return *this;
 }
 
+/****************************************************************************
+ * Description: Fonction qui assigne a l'operateur = a une fonction qui permet de copier les attributs d'un menu a un autre
+ * in: menu
+ * out:
+ * in \ out:
+ ****************************************************************************/
 Menu& Menu::operator=(const Menu& menu) {
 
 	if (this != &menu) {
@@ -123,11 +131,16 @@ Menu& Menu::operator=(const Menu& menu) {
 	return *this;
 }
 
+/****************************************************************************
+  * Description: Fonction qui le lit un fichier et cree un menu
+  * in: fichier
+  * out:
+  * in \ out:
+  ****************************************************************************/
 bool Menu::lireMenu(const string& fichier) {
 	ifstream file(fichier, ios::in);
 
 	if (!file) {
-		//cout << "ERREUR : le fichier n'a pas pu etre ouvert" << endl;
 		return false;
 	}
 	else {
@@ -208,6 +221,12 @@ bool Menu::lireMenu(const string& fichier) {
 	}
 }
 
+/****************************************************************************
+  * Description: Fonction qui trouve le un plat le moins cher dans une liste de plat
+  * in:
+  * out:
+  * in \ out:
+  ****************************************************************************/
 Plat * Menu::trouverPlatMoinsCher() const
 {
 	Plat minimum(*listePlats_[0]);
@@ -226,6 +245,12 @@ Plat * Menu::trouverPlatMoinsCher() const
 
 }
 
+/****************************************************************************
+  * Description: Fonction qui trouve le un plat avec l'aide d'un nom dans la liste et retourne le pointeur du plat
+  * in: nom
+  * out:
+  * in \ out:
+  ****************************************************************************/
 Plat* Menu::trouverPlat(const string& nom) const {
 	for (int i = 0; i < listePlats_.size(); i++) {
 		if (listePlats_[i]->getNom() == nom)

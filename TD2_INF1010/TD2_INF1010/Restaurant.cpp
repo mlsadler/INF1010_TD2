@@ -7,6 +7,13 @@
 #include "Restaurant.h"
 
 //constructeurs
+
+/****************************************************************************
+ * Description: Constructeur par default
+ * in:
+ * out:
+ * in \ out:
+ ****************************************************************************/
 Restaurant::Restaurant() {
 	nom_ = new string("Inconnu");
 
@@ -17,14 +24,14 @@ Restaurant::Restaurant() {
 	menuMatin_ = new Menu("menu.txt", Matin);
 	menuMidi_ = new Menu("menu.txt", Midi);
 	menuSoir_ = new Menu("menu.txt",  Soir);
-
-	////capaciteTables_ = INTTABLES;
-	/////nbTables_ = tables_.size();
-	//////tables_ = new Table*[capaciteTables_];
-
-
 }
 
+/***************************************************************************
+ * Description: Constucteur avec l'aide de parametre
+ * in: fichier, nom et moment
+ * out:
+ * in \ out:
+ ****************************************************************************/
 Restaurant::Restaurant(const string& fichier,  const string& nom, TypeMenu moment) {
 	nom_ = new string(nom);
 
@@ -36,14 +43,15 @@ Restaurant::Restaurant(const string& fichier,  const string& nom, TypeMenu momen
 	menuMidi_ = new Menu(fichier,  Midi);
 	menuSoir_ = new Menu(fichier,  Soir);
 
-
-	///////capaciteTables_ = INTTABLES;
-	///////nbTables_ = tables_.size();
-	////////tables_ = new Table*[capaciteTables_];
-
 	lireTable(fichier);
 }
 
+/***************************************************************************
+ * Description: Constucteur de copie
+ * in: restaurantCopie
+ * out:
+ * in \ out:
+ ****************************************************************************/
 Restaurant::Restaurant(const Restaurant& restaurantCopie)
 {
 	nom_ = new string(*(restaurantCopie.nom_));
@@ -61,37 +69,63 @@ Restaurant::Restaurant(const Restaurant& restaurantCopie)
 }
 
 //destructeur
+
+
+/***************************************************************************
+ * Description: Destructeur de la classe Restaurant
+ * in:
+ * out:
+ * in \ out:
+ ****************************************************************************/
 Restaurant::~Restaurant() {
 	delete nom_;
 	delete menuMatin_;
 	delete menuMidi_;
 	delete menuSoir_;
-
-	//A MODIFIER
-	//for (int i = 0; i < tables_.size(); i++)
-		//delete tables_[i];
-		///delete tables_[i];
-	////delete[] tables_;////??????????
 }
 
 
 //setter
 
+/***************************************************************************
+ * Description: Fonction qui set la variable au moment voulu
+ * in: moment
+ * out:
+ * in \ out:
+ ****************************************************************************/
 void Restaurant::setMoment(TypeMenu moment) {
 	momentJournee_ = moment;
 }
 //getters
+
+/***************************************************************************
+ * Description: Fonction qui retourne le nomdu restaurant
+ * in:
+ * out:
+ * in \ out:
+ ****************************************************************************/
 string Restaurant::getNom() const {
 	return *nom_;
 }
 
+/***************************************************************************
+ * Description: Fonction qui retourne le moment de la journee
+ * in:
+ * out:
+ * in \ out:
+ ****************************************************************************/
 TypeMenu Restaurant::getMoment() const {
 	return momentJournee_;
 }
 
 //autres methodes
 
-
+/***************************************************************************
+ * Description: Fonction qui libere un table et calcul le chiffre d'affaire
+ * in: id
+ * out:
+ * in \ out:
+ ****************************************************************************/
 void Restaurant::libererTable(int id) {
 	for (int i = 0; i < tables_.size(); i++) {
 		if (id == tables_[i]->getId()) {
@@ -100,31 +134,13 @@ void Restaurant::libererTable(int id) {
 		}
 	}
 }
-/*/
-void Restaurant::afficher() const {
-	cout << "Le restaurant " << *nom_;
-	if (chiffreAffaire_ != 0)
-		cout << " a fait un chiffre d'affaire de : " << chiffreAffaire_ << "$" << endl;
-	else
-		cout << " n'a pas fait de benefice ou le chiffre n'est pas encore calcule." << endl;
-	cout << "-Voici les tables : " << endl;
-	for (int i = 0; i < nbTables_; i++) {
-		cout << "\t" << tables_[i];
-		cout << endl;
-	}
-	cout << endl;
 
-
-	cout << "-Voici son menu : " << endl;
-	cout << "Matin : " << menuMatin_ << endl;
-
-	cout << "Midi : " << menuMidi_ << endl;
-	
-	cout << "Soir : " << menuSoir_ << endl;
-	
-}
-*/
-
+/***************************************************************************
+ * Description: Fonction pour commander des plats
+ * in: nom et idTable
+ * out:
+ * in \ out:
+ ****************************************************************************/
 void Restaurant::commanderPlat(const string& nom, int idTable) {
 	Plat* plat = nullptr;
 	int index;
@@ -150,6 +166,12 @@ void Restaurant::commanderPlat(const string& nom, int idTable) {
 	else cout << "Erreur : table non occupee ou plat introuvable" << endl;
 }
 
+/***************************************************************************
+ * Description: Fonction qui lira le document et cree un variable table
+ * in: fichier
+ * out:
+ * in \ out:
+ ****************************************************************************/
 void Restaurant::lireTable(const string& fichier) {
 	ifstream file(fichier, ios::in);
 
@@ -193,35 +215,23 @@ void Restaurant::lireTable(const string& fichier) {
 	}
 }
 
-/*
-void Restaurant::ajouterTable(int id, int nbPlaces) {
-	// A MODIFIER
-	/*
-	if (nbTables_ == capaciteTables_) {
-		capaciteTables_ *= 2;
-		Table** temp = new Table*[capaciteTables_];
-
-		for (int i = 0; i < nbTables_; i++) {
-			temp[i] = tables_[i];
-		}
-
-		delete[] tables_;
-		tables_ = temp;
-
-	}
-
-	tables_[nbTables_] = new Table(id, nbPlaces);
-	nbTables_++;
-	
-	tables_.push_back(id, nbPlaces);/////pas sur qu on peut en mettre 2
-}
-*/
-
+/****************************************************************************
+ * Description: Fonction qui assigne a l'operateur += a une fonction pour ajouter une table
+ * in: table
+ * out:
+ * in \ out:
+ ****************************************************************************/
 void Restaurant::operator+=(const Table& table)
 {
 	return tables_.push_back(new Table(table));
 }
 
+/****************************************************************************
+ * Description: Fonction qui assigne a l'operateur = a une fonction qui permet de copier les attributs d'un restaurant a un autre
+ * in: menu
+ * out:
+ * in \ out:
+ ****************************************************************************/
 Restaurant& Restaurant::operator= (const Restaurant& restaurant)
 {
 	if (this != &restaurant){
@@ -241,13 +251,16 @@ Restaurant& Restaurant::operator= (const Restaurant& restaurant)
 		
 
 	}
-	//delete restaurant.nom_;
-	//delete restaurant.momentJournee_;
-	//delete restaurant;
 
 	return *this;
 }
 
+/****************************************************************************
+ * Description: Fonction qui assigne a l'operateur << a une fonction d'affichage d'un restaurant
+ * in: restaurant
+ * out:
+ * in \ out: o
+ ****************************************************************************/
 ostream& operator<< (ostream& o, const Restaurant& restaurant){
 
 	o << "Le restaurant " << *restaurant.nom_;
@@ -273,6 +286,12 @@ ostream& operator<< (ostream& o, const Restaurant& restaurant){
 	return o;
 }
 
+/****************************************************************************
+ * Description: Fonction qui assigne a l'operateur < une fonction de comparaison entre 2 chiffres d'affaire de restaurants
+ * in: restaurant
+ * out:
+ * in \ out:
+ ****************************************************************************/
 bool Restaurant::operator<(const Restaurant& restaurant) {
 	if (chiffreAffaire_ < restaurant.chiffreAffaire_) {
 		return true;
@@ -283,11 +302,23 @@ bool Restaurant::operator<(const Restaurant& restaurant) {
 
 }
 
+/***************************************************************************
+ * Description: Fonction qui set la variable au nom voulue
+ * in: nom
+ * out:
+ * in \ out:
+ ****************************************************************************/
 void Restaurant::setNom(string nom) {
 
 	*nom_ = nom;
 }
 
+/***************************************************************************
+ * Description: Fonction pour placer les clients a une table
+ * in: nbClients
+ * out:
+ * in \ out:
+ ****************************************************************************/
 void Restaurant::placerClients(int nbClients) {
 	int indexTable = -1;
 	int minimum = 100;
