@@ -8,6 +8,16 @@
 
 using namespace std; 
 
+/*
+Réponse aux questions:
+		1. L'utilité de l'opérateur = et du constructeur par copie est  d'assigné 
+		   les attributs d'un objet a un autre objet de la même classe.
+		2. La différence entre les deux est que l'opérateur = sert à assigné les 
+		   attributs d'un objet à un autre qui existe déjà, tandis que le constructeur 
+		   par copie sert à initialiser un nouvel objet de la meme classe avec les 
+		   mêmes attributs de l'autre objet
+*/
+
 int main() {
 
 	//creation du restaurant 
