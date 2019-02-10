@@ -2,6 +2,7 @@
 * Titre : Table.h - Travail Pratique #2
 * Date : 18 Janvier 2019
 * Auteur : Allan BEDDOUK
+* Modifier par : Mark Weber-Sadler (1947609) et Felix Dumont (1954787)
 */
 
 #ifndef TABLE_H
